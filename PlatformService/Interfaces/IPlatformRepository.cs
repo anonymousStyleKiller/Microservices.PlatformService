@@ -2,7 +2,7 @@
 
 namespace PlatformService.Interfaces;
 
-public interface IRepository
+public interface IPlatformRepository
 {
     bool SaveChanges();
     IEnumerable<Platform?> GetAllPlatforms();

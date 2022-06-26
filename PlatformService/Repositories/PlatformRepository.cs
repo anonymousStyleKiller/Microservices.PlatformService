@@ -4,11 +4,11 @@ using PlatformService.Models;
 
 namespace PlatformService.Repositories;
 
-internal class Repository : IRepository
+internal class PlatformRepository : IPlatformRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public Repository(ApplicationDbContext context)
+    public PlatformRepository(ApplicationDbContext context)
     {
         _context = context;
     }

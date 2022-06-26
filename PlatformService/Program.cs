@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
+using PlatformService.Interfaces;
+using PlatformService.Mock;
+using PlatformService.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("InMem")
 );
 
+builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +30,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+MockDbData.Population(app);
 
 app.MapControllers();
 
