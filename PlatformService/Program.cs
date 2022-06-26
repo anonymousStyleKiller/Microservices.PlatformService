@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using PlatformService.Data;
+using PlatformService.Interfaces;
+using PlatformService.Mock;
+using PlatformService.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +12,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseInMemoryDatabase("InMem")
+);
+
+builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 
 var app = builder.Build();
 
@@ -19,6 +31,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+MockDbData.Population(app);
 
 app.MapControllers();
 
